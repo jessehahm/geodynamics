@@ -1,0 +1,40 @@
+%Author: Jesse Hahm
+
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec 05 12:36:13 2014
+
+@author: wjh
+"""
+
+import IPython
+import math
+import matplotlib.pyplot as plt 
+import pylab
+import numpy as np
+import scipy
+
+
+def gaussian(x, mu, sig):
+    return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.))) / (sig*np.power(2*3.14159,0.5))
+
+#GENERATE INITIAL TOPOGRAPHY
+x = np.linspace(-10,10,1000)
+
+Hc = 35 #km, thickness of crust away from mountain
+mu = 0 #km, horizontal offset of mountain
+sig = 2 #km, width of mountain
+h = 5 #km, height of mountain
+topography = h*gaussian(x, mu, sig)
+rho_c = 2.8 #g/cm3, density of crust
+rho_m = 3.5 #g/cm3, density of mantle
+f = rho_c/(rho_m-rho_c) #Isostatic factor
+
+d = topography*f
+moho = -Hc-d
+#PLOT 
+fig = pylab.figure()
+
+pyplot.scatter(x,topography, marker = "o", color = 'r')
+
+pyplot.scatter(x,moho, marker = "o", color = 'b')
